@@ -1,43 +1,33 @@
 "use babel";
 
-import Reindent from "../lib/main";
 
 describe("reindent", () => {
     const FILE_NAME = "fixture.py";
     let buffer = null;
     let editor = null;
     let packageActivatePromise = null;
-    let editorView = null;
+    let editorElement = null;
+
+    executeReindent = ((callback) => {
+        atom.commands.dispatch(editorElement, 'reindent:reindent');
+        waitsForPromise(() => {
+            return packageActivatePromise;
+        });
+        return runs(callback);
+    });
 
     beforeEach(() => {
         waitsForPromise(() =>
             atom.workspace.open(FILE_NAME).then((ed) => {
+                editorElement = atom.views.getView(ed);
                 editor = ed;
                 editor.setSoftTabs(true);
                 editor.setTabLength(4);
                 buffer = editor.buffer;
-
-                packageActivatePromise = atom.packages.activatePackage("reindent")
-
-                editor.insertText("asdf\n");
-                editor.selectAll();
-
-                editorView = atom.views.getView(editor);
-                atom.commands.dispatch(editorView, 'reindent:reindent')
-                waitsForPromise(function() {
-                    return packageActivatePromise;
-                });
-                editor.selectAll();
-                editor.delete()
-
             }),
         );
 
-
-        // atom.commands.dispatch(editor, 'reindent:reindent')
-        // waitsForPromise(function() {
-        //     return packageActivatePromise;
-        // });
+        packageActivatePromise = atom.packages.activatePackage("reindent");
     });
 
     // Aligned with opening delimiter
@@ -50,12 +40,10 @@ describe("reindent", () => {
             it("reindents a for loop", () => {
                 editor.insertText("for x in y:\n     print(x)\n");
                 editor.selectAll();
-                console.log(editor)
-                atom.commands.dispatch(editorView, 'reindent:reindent')
-                // waitsForPromise(function() {
-                //     return packageActivatePromise;
-                // });
-                expect(buffer.lineForRow(1)).toBe(" ".repeat(4) + "print(x)");
+                console.log(editor.getSelectedText())
+                executeReindent(function() {
+                    expect(buffer.lineForRow(1)).toBe(" ".repeat(4) + "print(x)");
+                });
             });
 
             /*
@@ -65,8 +53,9 @@ describe("reindent", () => {
             it("reindents a with statement", () => {
                 editor.insertText("with open(filename) as f:\n f.read()\n");
                 editor.selectAll();
-                atom.commands.dispatch(editorView, 'reindent:reindent')
-                expect(buffer.lineForRow(1)).toBe(" ".repeat(4) + "f.read()");
+                executeReindent(function() {
+                    expect(buffer.lineForRow(1)).toBe(" ".repeat(4) + "f.read()");
+                });
             });
         });
     });
