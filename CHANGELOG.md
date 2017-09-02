@@ -1,2 +1,3 @@
-## 0.1.0 - First Release
-* Initial version - can re-indent!
+## 1.0.0 - Released
+* Automatic reindentation
+* Travis CI
