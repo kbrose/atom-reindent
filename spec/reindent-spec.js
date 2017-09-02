@@ -1,20 +1,13 @@
 "use babel";
+import Reindent from "../lib/reindent";
 
 
 describe("reindent", () => {
     const FILE_NAME = "fixture.py";
     let buffer = null;
     let editor = null;
-    let packageActivatePromise = null;
     let editorElement = null;
-
-    executeReindent = ((callback) => {
-        atom.commands.dispatch(editorElement, 'reindent:reindent');
-        waitsForPromise(() => {
-            return packageActivatePromise;
-        });
-        return runs(callback);
-    });
+    let reindent = null;
 
     beforeEach(() => {
         waitsForPromise(() =>
@@ -27,7 +20,20 @@ describe("reindent", () => {
             }),
         );
 
-        packageActivatePromise = atom.packages.activatePackage("reindent");
+        waitsForPromise(() => {
+            const packages = atom.packages.getAvailablePackageNames();
+            let languagePackage;
+
+            if (packages.indexOf("language-python") > -1) {
+                languagePackage = "language-python";
+            } else if (packages.indexOf("MagicPython") > -1) {
+                languagePackage = "MagicPython";
+            }
+
+            return atom.packages.activatePackage(languagePackage);
+        });
+
+        reindent = new Reindent();
     });
 
     // Aligned with opening delimiter
@@ -40,10 +46,8 @@ describe("reindent", () => {
             it("reindents a for loop", () => {
                 editor.insertText("for x in y:\n     print(x)\n");
                 editor.selectAll();
-                console.log(editor.getSelectedText())
-                executeReindent(function() {
-                    expect(buffer.lineForRow(1)).toBe(" ".repeat(4) + "print(x)");
-                });
+                reindent.reindent();
+                expect(buffer.lineForRow(1)).toBe(" ".repeat(4) + "print(x)");
             });
 
             /*
@@ -53,9 +57,8 @@ describe("reindent", () => {
             it("reindents a with statement", () => {
                 editor.insertText("with open(filename) as f:\n f.read()\n");
                 editor.selectAll();
-                executeReindent(function() {
-                    expect(buffer.lineForRow(1)).toBe(" ".repeat(4) + "f.read()");
-                });
+                reindent.reindent();
+                expect(buffer.lineForRow(1)).toBe(" ".repeat(4) + "f.read()");
             });
         });
     });
