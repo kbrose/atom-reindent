@@ -1,4 +1,4 @@
-# reindent package
+# reindent
 
 Quickly re-indent your code!
 
@@ -33,5 +33,7 @@ for x in y:
 If you highlight only the second line (`print(x)`) and reindent, then nothing will happen. You have to include the line `for x in y:` in your selection.
 
 ----------
+
+![](https://travis-ci.org/kbrose/atom-reindent.svg?branch=master)
 
 https://github.com/kbrose/atom-reindent
