@@ -1,12 +1,12 @@
 {
   "name": "reindent",
   "main": "./lib/main",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Quickly re-indent your code!",
   "keywords": [
-      "indent",
-      "autoindent",
-      "reindent"
+    "indent",
+    "autoindent",
+    "reindent"
   ],
   "activationCommands": {
     "atom-text-editor": "reindent:reindent"
