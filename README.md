@@ -14,7 +14,7 @@ Highlight the lines of code you want to re-indent, and activate the re-indent co
 
 ## How?
 
-This package
+This package:
 
 * expands your selection to include full lines,
 * splits the selected text along the file's newline (or `\n` if the file's newline character is unknown),
@@ -31,5 +31,7 @@ for x in y:
 ```
 
 If you highlight only the second line (`print(x)`) and reindent, then nothing will happen. You have to include the line `for x in y:` in your selection.
+
+----------
 
 https://github.com/kbrose/atom-reindent
