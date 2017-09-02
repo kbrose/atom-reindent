@@ -2,7 +2,7 @@
   "name": "reindent",
   "main": "./lib/main",
   "version": "1.0.0",
-  "description": "A short description of your package",
+  "description": "Quickly re-indent your code!",
   "keywords": [
       "indent",
       "autoindent",
@@ -11,7 +11,7 @@
   "activationCommands": {
     "atom-text-editor": "reindent:reindent"
   },
-  "repository": "https://github.com/kbrose/reindent",
+  "repository": "https://github.com/kbrose/atom-reindent",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
