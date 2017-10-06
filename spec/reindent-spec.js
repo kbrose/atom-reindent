@@ -24,7 +24,7 @@ describe("reindent", () => {
 
         beforeEach(() => {
             waitsForPromise(() =>
-                atom.workspace.open("fixture.py").then((ed) => {
+                atom.workspace.open("../../fixture.py").then((ed) => {
                     editorElement = atom.views.getView(ed);
                     editor = ed;
                     editor.setSoftTabs(true);
@@ -63,7 +63,7 @@ describe("reindent", () => {
 
         beforeEach(() => {
             waitsForPromise(() =>
-                atom.workspace.open("fixture.js").then((ed) => {
+                atom.workspace.open("../../fixture.js").then((ed) => {
                     editorElement = atom.views.getView(ed);
                     editor = ed;
                     editor.setSoftTabs(true);
