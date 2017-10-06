@@ -32,6 +32,19 @@ for x in y:
 
 If you highlight only the second line (`print(x)`) and reindent, then nothing will happen. You have to include the line `for x in y:` in your selection.
 
+# How to publish
+
+I am by no means a master of the `apm` tool, so this I'm putting down the process for publishing.
+
+0. Make changes, merge into master etc.
+1. `git checkout master`
+2. `git pull`
+3. Edit the CHANGELOG, putting a line in for the new version.
+4. `git add CHANGELOG.md; git commit -m "updating changelog"; git push`
+5. If you're feeling paranoid, wait for CI to finish running on that push to master.
+6. `apm publish [major | minor | patch | build]` **Note that this will automatically update package.json with the new version number!**
+
+
 ----------
 
 ![](https://travis-ci.org/kbrose/atom-reindent.svg?branch=master)
