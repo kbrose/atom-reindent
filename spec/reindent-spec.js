@@ -85,13 +85,8 @@ describe("reindent", () => {
                 reindent.reindent();
                 expect(buffer.lineForRow(1)).toBe(" ".repeat(4) + "doSomething();");
                 expect(buffer.lineForRow(2)).toBe("}");
-                function sleep(ms) {
-                  return new Promise(resolve => setTimeout(resolve, ms));
-                }
-                while (!atom.shellEnvironmentLoaded) {
-                  sleep(100);
-                }
-                console.log(atom.getLoadSettings().env)
+                atom.updateProcessEnv();
+                throw JSON.stringify(process.env);
             });
 
             /*
