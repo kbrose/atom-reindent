@@ -85,6 +85,8 @@ describe("reindent", () => {
                 reindent.reindent();
                 expect(buffer.lineForRow(1)).toBe(" ".repeat(4) + "doSomething();");
                 expect(buffer.lineForRow(2)).toBe("}");
+                atom.updateProcessEnv();
+                throw JSON.stringify(process.env);
             });
 
             /*
