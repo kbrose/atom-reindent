@@ -8,9 +8,16 @@
     "autoindent",
     "reindent"
   ],
+  "homepage": "https://github.com/kbrose/atom-reindent",
+  "bugs": "https://github.com/kbrose/atom-reindent/issues",
   "activationCommands": {
     "atom-text-editor": "reindent:reindent"
   },
+  "contributors": [
+    {
+      "name": "Kevin Rose"
+    }
+  ],
   "repository": "https://github.com/kbrose/atom-reindent",
   "license": "MIT",
   "engines": {
