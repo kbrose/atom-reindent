@@ -1,11 +1,9 @@
 "use babel";
 import Reindent from "../lib/reindent";
 
-
 describe("reindent", () => {
     let buffer = null;
     let editor = null;
-    let editorElement = null;
     let reindent = null;
 
     beforeEach(() => {
@@ -29,9 +27,20 @@ describe("reindent", () => {
                     editor = ed;
                     editor.setSoftTabs(true);
                     editor.setTabLength(4);
+                    editor.autoIndent = true
                     buffer = editor.buffer;
                 }),
             );
+        });
+
+        describe("the environment", () => {
+            it("has correct tablength", () => {
+                expect(editor.getTabLength()).toBe(4);
+            });
+
+            it("should autoindent", () => {
+                expect(editor.shouldAutoIndent()).toBe(true)
+            });
         });
 
         describe("indents with colons", () => {
@@ -39,6 +48,10 @@ describe("reindent", () => {
             for x in y:
                 print(x)
             */
+            it("is in source.python scope", () => {
+                expect(editor.getGrammar().scopeName).toBe('source.python')
+            });
+
             it("reindents a for loop", () => {
                 editor.insertText("for x in y:\n     print(x)\n");
                 editor.selectAll();
@@ -64,13 +77,23 @@ describe("reindent", () => {
         beforeEach(() => {
             waitsForPromise(() =>
                 atom.workspace.open("../../fixture.js").then((ed) => {
-                    editorElement = atom.views.getView(ed);
                     editor = ed;
                     editor.setSoftTabs(true);
                     editor.setTabLength(4);
+                    editor.autoIndent = true
                     buffer = editor.buffer;
                 }),
             );
+        });
+
+        describe("the environment", () => {
+            it("has correct tablength", () => {
+                expect(editor.getTabLength()).toBe(4);
+            });
+
+            it("should autoindent", () => {
+                expect(editor.shouldAutoIndent()).toBe(true)
+            });
         });
 
         describe("indents with colons", () => {
